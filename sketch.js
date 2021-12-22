@@ -2,11 +2,13 @@ const btn = document.querySelector('button'), chunks = [];
 
 function setup(){
     createCanvas(1280, 720);
-    d = min(height, width)-200;
+    d = min(height, width)*0.9;
     r = d/2;
     ds = d*1/4;
     dm = d*1/2;
     dh = d*3/4;
+    lineWeight = d*0.06;
+    coinR = 80;
 }
 
 min = function(a, b){
@@ -19,6 +21,8 @@ let time, mm, ang, angS, angM, angH;
 var ds, dm, dh, dt = 20;
 let colS = [255, 0, 0], colM = [0, 255, 0], colH = [0, 0, 255];
 var distt = r-20, disth = r-190, distm = r-100, dists = r-60;
+var coinR;
+var lineWeight;
 
 toR = function(a){
     return a*PI/180;
@@ -57,12 +61,12 @@ function drawText(){
 function flipCoin(){
     strokeWeight(0);
     fill(255, 255, 0);
-    var we = 100*sin(map(time.getMilliseconds(), 0, 999, -PI/2, PI/2)), he = 100*sin(map(time.getMilliseconds(), 0, 999, -PI/2, PI/2));
+    var we = coinR*sin(map(time.getMilliseconds(), 0, 999, -PI/2, PI/2)), he = coinR*sin(map(time.getMilliseconds(), 0, 999, -PI/2, PI/2));
     //var we = 100*sin(map(time.getMilliseconds(), 0, 999, -PI/2, PI/2)+PI/2), he = 100*sin(map(time.getMilliseconds(), 0, 999, -PI/2, PI/2)+PI/2);
-    if (time.getSeconds()%2==0) ellipse(0, 0, we, 100);
-    else ellipse(0, 0, 100, he);
+    if (time.getSeconds()%2==0) ellipse(0, 0, we, coinR);
+    else ellipse(0, 0, coinR, he);
 }
- 
+
 function draw(){
     background(0);
     time = new Date();
@@ -72,12 +76,12 @@ function draw(){
     angM = time.getMinutes()*6 - 90 + time.getSeconds()*0.1;
     angH = time.getHours()*30 - 90 + time.getMinutes()*0.5 + time.getSeconds()*0.5/60  +time.getMilliseconds()*0.5/60/1000;
     translate(width/2, height/2);
-    strokeWeight(8);
+    strokeWeight(5);
     fill(0);
     stroke(255);
     ellipse(0, 0, d, d);
     drawText();
-    strokeWeight(60);
+    strokeWeight(lineWeight);
     fill(0);
     if (time.getSeconds() != 0) {
         drawS(0);
