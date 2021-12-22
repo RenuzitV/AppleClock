@@ -1,42 +1,7 @@
 const btn = document.querySelector('button'), chunks = [];
-function record() {
-  chunks.length = 0;
-  let stream = document.querySelector('canvas').captureStream(30),
-   options = {
-      BitsPerSecond : 1e35,
-      bitRateMode : 'cbr',
-      mimeType: "video/webm"
-  } 
-  recorder = new MediaRecorder(stream, options);
-  recorder.ondataavailable = e => {
-    if (e.data.size) {
-      chunks.push(e.data);
-    }
-  };
-  recorder.onstop = exportVideo;
-  btn.onclick = e => {
-    recorder.stop();
-    btn.textContent = 'start recording';
-    btn.onclick = record;
-  };
-  recorder.start();
-   kt = true;
-  btn.textContent = 'stop recording';
-}
-
-function exportVideo(e) {
-  var blob = new Blob(chunks);
-  var vid = document.createElement('video');
-  vid.id = 'recorded'
-  vid.controls = true;
-  vid.src = URL.createObjectURL(blob);
-  document.body.appendChild(vid);
-  vid.play();
-}
-btn.onclick = record;
 
 function setup(){
-    createCanvas(1920, 1080);
+    createCanvas(1280, 720);
     d = min(height, width)-200;
     r = d/2;
     ds = d*1/4;
